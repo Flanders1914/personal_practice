@@ -1,0 +1,108 @@
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode[]} lists
+ * @return {ListNode}
+ */
+
+function mergeTwoLists (list1, list2) {
+
+    let result = {
+        next : null
+    };
+
+    let head = result;
+    let current1 = list1;
+    let current2 = list2;
+
+    while ( current1 !== null && current2 !== null) {
+
+        if (current1.val < current2.val) {
+
+            result.next = {
+                val : current1.val,
+                next : null
+            };
+            current1 = current1.next;
+
+        }
+        else {
+            result.next = {
+                val : current2.val,
+                next : null
+            };
+            current2 = current2.next;
+        }
+        result = result.next;
+
+    }
+
+    while (current1 != null) {
+        result.next = {
+            val : current1.val,
+            next : null
+        };
+        current1 = current1.next;
+        result = result.next;
+    }
+
+    while (current2 != null) {
+        result.next = {
+            val : current2.val,
+            next : null
+        };
+        current2 = current2.next;
+        result = result.next;
+    }
+    
+
+    return head.next;
+}
+
+var mergeKLists = function(lists, l = 0, r = lists.length - 1) {
+
+    if (l > r) return null;
+    if (l == r) return lists[l];
+    else if (l == r - 1) return mergeTwoLists(lists[l], lists[r]);
+
+    let mid = Math.floor((r + l)/2);
+    return mergeTwoLists(mergeKLists(lists,l,mid), mergeKLists(lists,mid + 1, r));
+};
+let a = {
+    val : 1,
+    next : {
+        val : 4,
+        next : {
+            val : 6,
+            next : null
+        }
+    }
+}
+
+let b = {
+    val : 4,
+    next : {
+        val : 5,
+        next : {
+            val : 6,
+            next : null
+        }
+    }
+}
+
+let c = {
+    val : -1,
+    next : {
+        val : 5,
+        next : null
+    }
+}
+
+let test_list = [null,b,c,a];
+let ans = mergeKLists(test_list);
+let s = 1;
