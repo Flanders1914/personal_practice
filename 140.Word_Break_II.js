@@ -4,13 +4,15 @@
 不过数组dp不仅仅存储一个boolean，而是一个数组
 数组dp[i] 存储分割s(0-i)为一个可被wordDict组成的字符串s(0-k-1)和一个wordDict元素s(k-i)的下标k
 最后利用一个递归函数生成所有的答案(这个函数和求子集合函数类似)
+
+可以将dp和答案生成两步结合在一起，速度能够快一点
 */
 var wordBreak = function(s, wordDict) {
-    const hash = new Map();
+    const hash = new Set();
     let max_word_length = 0;
 
     for (let word of wordDict) {
-        hash.set(word, true);
+        hash.add(word);
         max_word_length = (max_word_length > word.length)? max_word_length : word.length;
     }
 
