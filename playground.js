@@ -1,23 +1,24 @@
-/**
- * @param {number[]} nums
- * @return {number}
- */
-var waysToSplitArray = function(nums) {
+function solution(stockPrice) {
+    let min = Number.MAX_VALUE
+    let res = -1
+
     let sum = 0
-    for (let num of nums) {
-        sum += num
+    for (let item of stockPrice) {
+        sum += item
     }
 
-    let res = 0
     let pre = 0
-    for (let i = 0; i < nums.length-1; i++) {
-        if (pre + nums[i] >= sum - (pre + nums[i])) {
-            res++
+    for (let i = 0; i < stockPrice.length-1; i++) {
+        pre += stockPrice[i]
+        let remain = sum - pre
+        let temp =  Math.abs(Math.floor(pre / (i+1)) - Math.floor(remain / (stockPrice.length-i-1)))
+        if (temp < min) {
+            min = temp
+            res = i+1
         }
-        pre += nums[i]
     }
     return res
-};
+}
 
-let nums = [10,4,-8,7]
-console.log(waysToSplitArray(nums))
+let stockPrice = [1, 3, 2, 3]
+console.log(solution(stockPrice))
